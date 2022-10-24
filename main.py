@@ -1,20 +1,48 @@
-alphabet = [
-    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w",
-    "x", "y", "z"
-    ]
+alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZабвгґдеєжзиіїйклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ123456789"
 
-phrase = str(input())
-result = ""
+# Encrypts message with caesar cipher
+def Encrypt(message, key):
+    result = ""
+    for item in message:
+        try:
+            current_index = alphabet.index(item)
+            if current_index + key > len(alphabet):
+                new_index = current_index + key - len(alphabet)
+                result += alphabet[new_index]
+            else:
+                new_index = current_index + key
+                result += alphabet[new_index]
 
-for item in phrase:
-    try:
-        current_index = alphabet.index(item.lower())
-        if current_index + 3 > - len(alphabet):
-            new_index = current_index + 3 - len(alphabet)
-        else:
-            new_index = current_index + 3
-        result += alphabet[new_index]
-    except ValueError:
-        result += item
+        except ValueError:
+            result += item
+    return result
 
-print(result)
+# Decrypts message with caesar cipher
+def Decrypt(message, key):
+    result = ""
+    for item in message:
+        try:
+            current_index = alphabet.index(item)
+            if current_index - key < 0:
+                new_index = current_index - key + len(alphabet)
+                result += alphabet[new_index]
+            else:
+                new_index = current_index - key
+                result += alphabet[new_index]
+
+        except ValueError:
+            result += item
+    return result
+
+
+
+while True:
+    message = str(input("Введіть речення для шифровки: "))
+
+    key = 3
+
+    encryptedMessage = Encrypt(message, key)
+    print(f'Encrypted message: {encryptedMessage}')
+
+    decryptedMessage = Decrypt(encryptedMessage, key)
+    print(f'Decrypted message: {decryptedMessage} \n')
